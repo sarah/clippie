@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{clippie}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["sarah", "coreyhaines"]
@@ -23,10 +23,11 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "features/clippie.feature",
-     "features/step_definitions/clippie_steps.rb",
+     "clippie.gemspec",
+     "features/generate_cucumber_steps.feature",
+     "features/step_definitions/cucumber_step_generation_steps.rb",
      "features/support/env.rb",
-     "lib/clippie.rb",
+     "lib/clippie/cucumber.rb",
      "spec/clippie_spec.rb",
      "spec/spec_helper.rb"
   ]

@@ -9,21 +9,14 @@ describe Clippie::Cucumber do
       @file.stub!(:write)
       @file.stub!(:close)
     end
-    context "file does not exist" do
-      before(:each) do
-        File.stub!(:exists?).and_return false
-      end
-      it "generates file" do
-        File.should_receive(:open).with(File.join(EXAMPLE_APP_ROOT, "clippie_steps.rb"), "a+")
-        Clippie::Cucumber.define_steps "dkdk"
-      end
+    it "generates file" do
+      File.should_receive(:open).with(File.join(EXAMPLE_APP_ROOT, "clippie_steps.rb"), "a+")
+      Clippie::Cucumber.define_steps "dkdk"
     end
-    context "writing steps to file" do
-      it "writes the steps to the file" do
-        step_definitions = "IAmAnUndefinedStep"
-        @file.should_receive(:write).with(step_definitions + "\n\n")
-        Clippie::Cucumber.define_steps step_definitions
-      end
+    it "writes the steps to the file" do
+      step_definitions = "IAmAnUndefinedStep"
+      @file.should_receive(:write).with(step_definitions + "\n\n")
+      Clippie::Cucumber.define_steps step_definitions
     end
     it "closes the file" do
       @file.should_receive :close
