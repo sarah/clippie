@@ -22,4 +22,5 @@ Feature: Inserting cucumber steps into file
     """
     When I create the undefined steps
     Then the file "clippie_steps.rb" should contain the undefined step
+
   

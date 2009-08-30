@@ -14,3 +14,4 @@ end
 After do
   File.delete(CREATED_STEP_FILE) if File.exists? CREATED_STEP_FILE
 end
+
