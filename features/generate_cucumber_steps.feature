@@ -6,9 +6,20 @@ Feature: Inserting cucumber steps into file
   Scenario: Creating the auto_defined_steps file
     Given the following undefined step
     """
-    Given /^the following undefined step$/ do
+    Given /^something has been initialized$/ do
       pending
     end
     """
     When I create the undefined steps
     Then the file "clippie_steps.rb" should exist in example app
+
+  Scenario: Adding the steps to the auto_defined_steps file
+    Given the following undefined step
+    """
+    Given /^something has been initialized$/ do
+      pending
+    end
+    """
+    When I create the undefined steps
+    Then the file "clippie_steps.rb" should contain the undefined step
+  
