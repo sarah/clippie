@@ -31,7 +31,9 @@ module Clippie
       end
     end
   end
-  
+  def self.says(something)
+    puts "Clippie Says: #{something}\n"
+  end
 end
 
 if respond_to?(:After)
@@ -45,8 +47,13 @@ at_exit do
     multiline_arg_class = step.multiline_arg.nil? ? nil : step.multiline_arg.class
       Cucumber::Cli::Main.step_mother.snippet_text(step.keyword, step.name, multiline_arg_class)
     }
-  puts "CLIPPIE!\n"
-  puts "Adding the following steps to clippie_steps.rb\n"
-  puts step_definitions.join("\n\n")
-  Clippie::Cucumber.define_steps(step_definitions.join("\n\n"))
+  Clippie.says "I noticed you have some undefined steps"
+  Clippie.says "Would you like me to create them for you [Yn]?"
+  input = gets
+  if(input =~ /^n/)
+    Clippie.says "Awwww...Okay. :("
+  else
+    Clippie.says "Yay! I'm creating them for you now."
+    Clippie::Cucumber.define_steps(step_definitions.join("\n\n"))
+  end
 end
