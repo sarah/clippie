@@ -32,7 +32,7 @@ module Clippie
     end
     
     class UndefinedSteps
-      def self.add(step)
+      def self.<<(step)
         (@undefined_steps ||= []) << step
       end
       def self.steps
@@ -47,15 +47,13 @@ module Clippie
 end
 
 if respond_to?(:After)
-  def create_steps(steps, show_undefined_steps = false)
+  def create_steps(steps)
     step_definitions = steps.map {|step|
       multiline_arg_class = step.multiline_arg.nil? ? nil : step.multiline_arg.class
         Cucumber::Cli::Main.step_mother.snippet_text(step.keyword, step.name, multiline_arg_class)
       }
     Clippie.says "I noticed you have some undefined steps."
-    if show_undefined_steps
-      puts steps.map {|step| "\t\"#{step.keyword} #{step.name}\""}.join("\n")
-    end
+    puts steps.map {|step| "\t\"#{step.keyword} #{step.name}\""}.join("\n")
     Clippie.says "Would you like me to create them for you [Yn]?"
     input = gets
     if(input =~ /^n/)
@@ -67,12 +65,11 @@ if respond_to?(:After)
   end
   
   After do
-    Cucumber::Cli::Main.step_mother.steps(:undefined).each {|step| Clippie::Cucumber::UndefinedSteps.add(step)}
-    
-    create_steps(Clippie::Cucumber::UndefinedSteps.steps, true) if Clippie::Cucumber.is_overly_helpful?
+    Cucumber::Cli::Main.step_mother.steps(:undefined).each {|step| Clippie::Cucumber::UndefinedSteps << step}
+    create_steps Clippie::Cucumber::UndefinedSteps.steps if Clippie::Cucumber.is_overly_helpful?
   end
 
   at_exit do
-    create_steps(Clippie::Cucumber::UndefinedSteps.steps) unless Clippie::Cucumber.is_overly_helpful?
+    create_steps Clippie::Cucumber::UndefinedSteps.steps unless Clippie::Cucumber.is_overly_helpful?
   end
 end
