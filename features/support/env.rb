@@ -4,7 +4,11 @@ require 'clippie/cucumber'
 require 'spec/expectations'
 
 EXAMPLE_APP_ROOT = File.join(File.dirname(__FILE__), '..', '..', 'example_app', 'features','step_definitions')
-Clippie::Cucumber::STEP_DEFINITIONS_ROOT = EXAMPLE_APP_ROOT
+
+Clippie::Cucumber.configure do
+  step_definitions EXAMPLE_APP_ROOT
+end
+
 CREATED_STEP_FILE = File.join(EXAMPLE_APP_ROOT, "clippie_steps.rb")
 
 Before do

@@ -7,11 +7,11 @@ When /^I create the undefined steps$/ do
 end
 
 Then /^the file "([^\"]*)" should exist in example app$/ do |filename|
-  File.exists?(File.join(Clippie::Cucumber::STEP_DEFINITIONS_ROOT, filename)).should be_true
+  File.exists?(File.join(Clippie::Cucumber.step_definitions_root, filename)).should be_true
 end
 
 Then /^the file "([^\"]*)" should contain the undefined step$/ do |filename|
-  file = File.open(File.join(Clippie::Cucumber::STEP_DEFINITIONS_ROOT, filename), "r")
+  file = File.open(File.join(Clippie::Cucumber.step_definitions_root, filename), "r")
   contents = ""
   while line = file.gets
     contents += line

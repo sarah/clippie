@@ -1,10 +1,26 @@
 module Clippie
   class Cucumber
-    STEP_DEFINITIONS_ROOT = "."
+    
+    def self.step_definitions_root=(path)
+      @step_definitions_root = path
+    end
+
+    def self.step_definitions_root
+      @step_definitions_root ||= "./features/step_definitions"
+    end
+    
     def self.define_steps(steps)
-      file = File.open(File.join(STEP_DEFINITIONS_ROOT, "clippie_steps.rb"), "a+")
+      file = File.open(File.join(step_definitions_root, "clippie_steps.rb"), "a+")
       file.write(steps + "\n\n" )
       file.close
+    end
+    
+    def self.configure &block
+      self.instance_eval &block
+    end
+    
+    def self.step_definitions(path)
+      self.step_definitions_root = path
     end
   end
 end
