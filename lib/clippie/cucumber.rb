@@ -16,7 +16,10 @@ module Clippie
     end
     
     def self.configure &block
-      self.instance_eval &block
+      config_options = ConfigOptions.new
+      config_options.instance_eval &block
+      its_okay_clippie if config_options.its_okay_clippie_set
+      step_definitions config_options.step_definitions_path
     end
     
     def self.step_definitions(path)
@@ -30,7 +33,21 @@ module Clippie
     def self.is_overly_helpful?
       ! @its_okay_clippie
     end
-    
+
+    class ConfigOptions
+      attr_reader :its_okay_clippie_set, :step_definitions_path
+      def initialize
+        @its_okay_clippie_set = false
+        @step_definitions_path = "./features/step_definitions"
+      end
+      def step_definitions(path)
+        @step_definitions_path = path
+      end
+      def its_okay_clippie
+        @its_okay_clippie = true
+      end
+    end
+
     class UndefinedSteps
       def self.<<(step)
         (@undefined_steps ||= []) << step
