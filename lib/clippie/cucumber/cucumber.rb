@@ -73,7 +73,7 @@ if respond_to?(:After)
     Clippie.says "I noticed you have some undefined steps."
     puts steps.map {|step| "\t\"#{step.keyword} #{step.name}\""}.join("\n")
     Clippie.says "Would you like me to create them for you [Yn]?"
-    input = gets
+    input = STDIN.gets
     if(input =~ /^n/)
       Clippie.says "Awwww...Okay. I'll stop now.  I'll just leave you alone. Paste them yourself."
     else
